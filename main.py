@@ -1,5 +1,5 @@
 import time
-from pythonicsql import dialects, pythonic, go
+from pythonicsql import dialects, go
 
 
 class PythonicSQL:
@@ -15,11 +15,7 @@ p = PythonicSQL(
 
 p.client.connect()
 
-res = (
-    p.client.builder.select(go.Slice_string(["id", "name", "last_name"]))
-    .from_("users")
-    .exec()
-)
+res = p.client.builder.select(go.Slice_string(["id"])).from_("interaction").exec()
 
 for r in res:
     print(r)

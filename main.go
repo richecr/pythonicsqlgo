@@ -21,7 +21,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	a, err := p.Query.Select([]string{"id", "name", "last_name"}).From_("users").Exec()
+	a, err := p.Query.Select([]string{"id"}).From_("users").Exec()
 	for _, row := range a {
 		fmt.Println(row)
 	}
