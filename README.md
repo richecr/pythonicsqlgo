@@ -1,4 +1,4 @@
-# PythonicSQL (Under development)
+# Pythonic Core (Under development)
 
 
 ## Go to Python3
@@ -6,7 +6,7 @@
 #### Generate package Python
 
 ```sh
-gopy pkg -name=pythonicsql -rename=true -author="Rich Ramalho" -email="richelton14@gmail.com" -desc="The unofficial HLTV Python API" -url="https://github.com/richecr/pythonicsqlgo" -output=pythonicsql -vm=python3 github.com/richecr/pythonicsqlgo github.com/richecr/pythonicsqlgo/lib/pythonic github.com/richecr/pythonicsqlgo/lib/query github.com/richecr/pythonicsqlgo/lib/dialects
+gopy pkg -name=pythonic_core -rename=true -author="Rich Ramalho" -email="richelton14@gmail.com" -desc="The core of pythonic in Golang" -url="https://github.com/richecr/pythonic-core" -output=pythonic_core -vm=python3 github.com/richecr/pythonic-core github.com/richecr/pythonic-core/lib/dialects github.com/richecr/pythonic-core/lib/query
 ```
 
 #### Generate dist

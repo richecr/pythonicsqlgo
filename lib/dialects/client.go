@@ -2,11 +2,10 @@ package dialects
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/lib/pq"
 
-	"github.com/richecr/pythonicsqlgo/lib/query"
+	"github.com/richecr/pythonic-core/lib/query"
 )
 
 type Client struct {
@@ -14,7 +13,6 @@ type Client struct {
 	Dialect  string
 	Database *sql.DB
 	Compiler *query.QueryCompiler
-	Builder  *query.QueryBuilder
 }
 
 func NewClient(dialect string, uri string) *Client {
@@ -23,7 +21,6 @@ func NewClient(dialect string, uri string) *Client {
 		Dialect:  dialect,
 		Database: nil,
 		Compiler: nil,
-		Builder:  nil,
 	}
 	client.init()
 	return client
@@ -32,20 +29,18 @@ func NewClient(dialect string, uri string) *Client {
 func (c *Client) init() {
 	db, err := sql.Open(c.Dialect, c.Uri)
 	if err != nil {
-		fmt.Println("Ops! Ocorreu um erro ao abrir a conexão com o banco de dados.")
+		panic(err)
 	}
-	fmt.Println("Conexão com o banco de dados estabelecida com sucesso!")
 	c.Database = db
 	c.Compiler = query.NewQueryCompiler(db)
-	c.Builder = query.NewQueryBuilder(c.Compiler)
 }
 
-func (c *Client) Connect() error {
-	err := c.Database.Ping()
+func (c *Client) Exec(sql string) ([]map[string]interface{}, error) {
+	result, err := c.Compiler.Exec(sql)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return result, nil
 }
 
 func (c *Client) Disconnect() error {
