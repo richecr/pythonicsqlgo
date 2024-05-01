@@ -35,7 +35,7 @@ func (c *Client) init() {
 	c.Compiler = query.NewQueryCompiler(db)
 }
 
-func (c *Client) Exec(sql string) ([]map[string]interface{}, error) {
+func (c *Client) Exec(sql string) ([]byte, error) {
 	result, err := c.Compiler.Exec(sql)
 	if err != nil {
 		return nil, err

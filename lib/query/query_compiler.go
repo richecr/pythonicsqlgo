@@ -2,6 +2,7 @@ package query
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 )
 
@@ -16,7 +17,7 @@ func NewQueryCompiler(client *sql.DB) *QueryCompiler {
 	return compiler
 }
 
-func (qc *QueryCompiler) Exec(sql string) ([]map[string]interface{}, error) {
+func (qc *QueryCompiler) Exec(sql string) ([]byte, error) {
 	var result []map[string]interface{}
 
 	rows, err := qc.Client.Query(sql)
@@ -31,7 +32,6 @@ func (qc *QueryCompiler) Exec(sql string) ([]map[string]interface{}, error) {
 	}
 	colTypes, err := rows.ColumnTypes()
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
@@ -83,5 +83,10 @@ func (qc *QueryCompiler) Exec(sql string) ([]map[string]interface{}, error) {
 		result = append(result, rowMap)
 	}
 
-	return result, nil
+	jsonResult, err := json.Marshal(result)
+	if err != nil {
+		return nil, err
+	}
+
+	return jsonResult, nil
 }
